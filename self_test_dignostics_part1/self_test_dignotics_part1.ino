@@ -1,4 +1,5 @@
 
+
 #include <Adafruit_NeoPixel.h>
 #include "U8glib.h"
 
@@ -418,7 +419,7 @@ void IR_TEST()
       showMessageOnLcd((char *)pgm_read_word(&(string_table[30])),(char *)pgm_read_word(&(string_table[17])));
       //delay(2000);
       currentMillis = millis();
-      while((millis()-currentMillis > interval) && count > 3) 
+      while((millis()-currentMillis < interval) && count < 3) 
            {
              if(irrecv.decode(&results)) 
                {
@@ -448,6 +449,8 @@ void loop()
 {
 
     }
+
+
 
 
 
