@@ -1,5 +1,3 @@
-
-
 #include <Adafruit_NeoPixel.h>
 #include "U8glib.h"
 
@@ -351,7 +349,7 @@ void ldr_TEST()
              
              u8g.firstPage();
            do {  
-                u8g.drawStr( x1, y1, "LDR");
+                u8g.drawStr( x1, y1, "LDR value:");
                 u8g.setPrintPos(x1, y2);
                 u8g.print(ldr_Value);
               } while( u8g.nextPage() );
@@ -373,7 +371,7 @@ void potentiometer_TEST()
             int pot_Value = analogRead(A2);
             u8g.firstPage();
            do {  
-                u8g.drawStr( x1, y1, "Pot");
+                u8g.drawStr( x1, y1, "Pot value:");
                 u8g.setPrintPos(x1, y2);
                 u8g.print(pot_Value);
               } while( u8g.nextPage() );
@@ -397,7 +395,7 @@ void potentiometer_TEST()
                byte temperature =( 5 * analogRead(A0) * 100) / 1024;
                u8g.firstPage();
                do {  
-                    //u8g.drawStr(x1, y1, "T:");
+                    u8g.drawStr(x1, y1, "Temp:");
                     u8g.setPrintPos(x1, y2);
                     u8g.print(temperature);
                     u8g.setPrintPos(50, y2);
@@ -449,6 +447,8 @@ void loop()
 {
 
     }
+
+
 
 
 
