@@ -1,8 +1,7 @@
-//#include <SoftwareSerial.h>
+
 #include <Adafruit_NeoPixel.h>
 #include "U8glib.h"
-//#include <SPI.h>
-//#include <SD.h>
+
 
 #include <IRremote.h>
 #define delay_val 2000
@@ -19,7 +18,7 @@
 
 
 U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE|U8G_I2C_OPT_DEV_0);  // I2C / TWI
-//SoftwareSerial BTserial(10, 9); // RX | TX
+
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, PIN, NEO_GRB + NEO_KHZ800);
 
 //const String TEST="Test ";
@@ -40,10 +39,8 @@ const char *const string_table[] PROGMEM = {"Self Test", "Diagnostics", "Test St
                                             "Touchpad touched", "Button pressed", "IR tested",
                                             "BLUETOOTH","send data", "from phone", "tested OK"
                                             };
-//char buffer[15];  // make sure this is large enough for the largest string it must hold
-                                            
+                                         
 unsigned long currentMillis = 0;
-//const int interval = 15000;
 
 #define RECV_PIN 3
 IRrecv irrecv(RECV_PIN);
@@ -421,7 +418,7 @@ void IR_TEST()
       showMessageOnLcd((char *)pgm_read_word(&(string_table[30])),(char *)pgm_read_word(&(string_table[17])));
       //delay(2000);
       currentMillis = millis();
-      while((millis()-currentMillis > interval) && count < 3) 
+      while((millis()-currentMillis > interval) && count > 3) 
            {
              if(irrecv.decode(&results)) 
                {
@@ -446,123 +443,12 @@ void IR_TEST()
       showMessageOnLcd((char *)pgm_read_word(&(string_table[15])),(char *)pgm_read_word(&(string_table[3])));
       //delay(2000);
     }
-/*    
-void sdCard_TEST()
-    {  byte chipSelect = 6;   //cs pin of SD card shield              
-       // Open serial communications and wait for port to open:
-     
-      //Serial.println("SD CARD TEST STARTED");
-      //showMessageOnLcd(1,17,"SDCARD Test",5,45,"Started");
-      showMessageOnLcd((char *)pgm_read_word(&(string_table[5])),(char *)pgm_read_word(&(string_table[2])));
 
-      while (!Serial)
-          {
-            ; // wait for serial port to connect. Needed for native USB port only
-          }
-       
-      //Serial.print("Initializing SD card...");
-      //showMessageOnLcd(1,17,"Initializing",5,45,"SD Card...");
-      showMessageOnLcd((char *)pgm_read_word(&(string_table[8])),(char *)pgm_read_word(&(string_table[5])));
-
-     // see if the card is present and can be initialized:
-      if (!SD.begin(chipSelect)) 
-        {
-          //Serial.println("Card failed, or not present");
-          //showMessageOnLcd(1,17,"Card Failed",1,45,"or not present");
-          showMessageOnLcd((char *)pgm_read_word(&(string_table[9])),(char *)pgm_read_word(&(string_table[10])));
-
-          //delay(delay_val);
-          // don't do anything more:
-          return;
-        }
-     //Serial.println("card initialized.");
-     //showMessageOnLcd(15,17,"Card ",1,45,"Initialized");
-     showMessageOnLcd((char *)pgm_read_word(&(string_table[5])),(char *)pgm_read_word(&(string_table[11])));
-
-     //delay(delay_val);
-    
-     File dataFile = SD.open("sdTest.txt", FILE_WRITE);
-     if(dataFile) 
-       {
-         //Serial.print("Writing to sdTest.txt...");
-         //showMessageOnLcd(1,17,"Writing to",1,45,"sdTest.txt...");
-         showMessageOnLcd((char *)pgm_read_word(&(string_table[12])),(char *)pgm_read_word(&(string_table[13])));
-
-         dataFile.println("test");
-         // close the file:
-         dataFile.close();
-         //Serial.println("done.");
-         //showMessageOnLcd(1,17,"Writing to",1,45,"sdTest.txt Done");
-         showMessageOnLcd((char *)pgm_read_word(&(string_table[12])),(char *)pgm_read_word(&(string_table[14])));
-
-       } 
-     else 
-       {
-         // if the file didn't open, print an error:
-         //Serial.println("error opening sdTest.txt");
-         //showMessageOnLcd(1,17,"Error opening",1,45,"sdTest.txt");
-         showMessageOnLcd((char *)pgm_read_word(&(string_table[15])),(char *)pgm_read_word(&(string_table[13])));
-
-       }
-
-     // re-open the file for reading:
-     dataFile = SD.open("sdTest.txt");
-     if(dataFile)
-       {
-        //Serial.println("sdTest.txt:");
-        //showMessageOnLcd(1,17,"reading ",1,45,"from sdCard");
-        showMessageOnLcd((char *)pgm_read_word(&(string_table[16])),(char *)pgm_read_word(&(string_table[5])));
-
-        // read from the file until there's nothing else in it:
-        while(dataFile.available()) 
-             {
-               //Serial.write(dataFile.read());
-               //showMessageOnLcd(1,17,"successfully",0,45,"read from Card");
-               showMessageOnLcd((char *)pgm_read_word(&(string_table[17])),(char *)pgm_read_word(&(string_table[18])));
-
-             }
-        // close the file:
-        dataFile.close();
-        //delay(1000);
-       } 
-     else 
-       {
-        // if the file didn't open, print an error:
-        //Serial.println("error opening sdTest.txt");
-        //showMessageOnLcd(1,17,"error opening",1,45,"sdTest.txt");
-        showMessageOnLcd((char *)pgm_read_word(&(string_table[15])),(char *)pgm_read_word(&(string_table[5])));
-
-       } 
-      
-      SD.remove("sdTest.txt"); 
-    //Serial.println("SD CARD TEST FINISHED"); 
-    //showMessageOnLcd(1,17,"SDCard Test",1,45,"FINISHED"); 
-    showMessageOnLcd((char *)pgm_read_word(&(string_table[5])),(char *)pgm_read_word(&(string_table[3])));
-   
-  }    
-*/
 void loop()
 {
- /*
-    // Keep reading from HC-05 and send to Arduino Serial Monitor
-    if(BTserial.available())
-      {  
-        char receivedData[4] = "";
-        int data = BTserial.readBytesUntil('\n',receivedData,4);
-        receivedData[data] = '\0';
-        Serial.write(receivedData);
-        //u8g.setPrintPos(x1, y1); 
-        //u8g.print(receivedData);
-        //String bluetoothData = String(receivedData);
-       // if(String(receivedData) == BT_Test_code)
-       //    {
-       //     showMessageOnLcd((char *)pgm_read_word(&(string_table[39])),(char *)pgm_read_word(&(string_table[42])));
-       //     showMessageOnLcd((char *)pgm_read_word(&(string_table[39])),(char *)pgm_read_word(&(string_table[3])));   
-       //    }
-       }
-     
-       */ 
+
     }
+
 
 
         
