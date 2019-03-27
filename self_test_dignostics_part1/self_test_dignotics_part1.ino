@@ -36,7 +36,7 @@ const char *const string_table[] PROGMEM = {"Self Test", "Diagnostics", "Test St
                                             "Shine Light On", "Turn knob of", "Press IR Remote",
                                             "Code1", "Code2", "Code3", "Code4", "Received",
                                             "Touchpad touched", "Button pressed", "IR tested",
-                                            "BLUETOOTH","send data", "from phone", "tested OK"
+                                            "BLUETOOTH","send data", "from phone", "tested OK","Finished"
                                             };
                                          
 unsigned long currentMillis = 0;
@@ -133,14 +133,14 @@ void LED_RING_TEST()
          {
            digitalWrite(i,HIGH);
            //showMessageOnLcd(10, 30,"LED "+ String(i),90,30,"ON");   
-           delay(delay_val_1k);
+           delay(500);
          }
       delay(delay_val);
       for(byte j=pin_Count; j>0; j--)
          {
            digitalWrite(j,LOW);       
            //showMessageOnLcd(10, 30,"LED "+String(j),90,30,"OFF");    
-           delay(delay_val_1k);
+           delay(500);
            if(j==0) break;
          }
       delay(delay_val);   
@@ -440,6 +440,7 @@ void IR_TEST()
                  }
              }
       showMessageOnLcd((char *)pgm_read_word(&(string_table[15])),(char *)pgm_read_word(&(string_table[3])));
+      showMessageOnLcd((char *)pgm_read_word(&(string_table[0])),(char *)pgm_read_word(&(string_table[43])));
       //delay(2000);
     }
 
